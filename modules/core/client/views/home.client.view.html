@@ -1,0 +1,41 @@
+<section data-ng-controller="HomeController">
+  <div class="jumbotron text-center">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+        <img alt="MEAN.JS" class="img-responsive text-center" src="https://c1.staticflickr.com/3/2931/14054246839_62a505a5a7_b.jpg" />
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <p class="lead">
+        What's poppin', sloppin'? Search for the most hoppin' and poppin' spots in your hood
+      </p>
+    </div>
+    <div class="row">
+      <p>
+        <form ng-submit="search(zip)">
+          <input type="text" name="zip" ng-model="zip" />
+          <input type="submit" value="Submit" />
+        </form>
+    </p>
+    </div>
+    <div class="results">
+    </div>
+    <div class="row" >
+      <table class="center" border="1">
+        <th> Bar </th>
+        <th> Yelp Rating </th>
+        <th> Who's Going? </th>
+        <th> I'm Going! </th>
+        </th>
+          <tr ng-repeat="result in results">
+              <td>{{ result.name }} <img class="resize" ng-src = "{{ result.image_url }}" /></td>
+              <td>{{ result.rating }}</td>
+              <td>{{ result.id }}</td>
+              <td><input ng-click="checkin(result.id)" type="button" ng-model="result.id"></td>
+          </tr>
+      </table>
+    </div>
+    </div>
+  </div>
+</section>

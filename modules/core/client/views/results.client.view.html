@@ -1,0 +1,23 @@
+<section data-ng-controller="HomeController">
+  <div class="jumbotron text-center">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+        <img alt="MEAN.JS" class="img-responsive text-center" src="https://c1.staticflickr.com/3/2931/14054246839_62a505a5a7_b.jpg" />
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <p class="lead">
+        What's poppin', sloppin'? Search for the most hoppin' and poppin' spots in your hood
+      </p>
+    </div>
+    <div class="row">
+      <table ng-controller="SearchController" border="1">
+          <tr ng-repeat="x in results">
+              <td>{{ x.name }}</td>
+              <td>{{ x.rating }}</td>
+          </tr>
+      </table>
+    </div>
+  </div>
+</section>
