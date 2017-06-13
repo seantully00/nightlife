@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication',
-  function ($scope, $state, $http, $location, $window, Authentication) {
+angular.module('users').controller('AuthenticationController', ['$scope', '$state', '$http', '$location', '$window', 'Authentication', '$localStorage',
+  function ($scope, $state, $http, $location, $window, Authentication, $localStorage) {
     $scope.authentication = Authentication;
 
     // Get an eventual error defined in the URL query string:
@@ -18,7 +18,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
         $scope.authentication.user = response;
 
         // And redirect to the previous or home page
-        $state.go($state.previous.state.name || 'home', $state.previous.params);
+        $state.go('home', {loggedin:true});
       }).error(function (response) {
         $scope.error = response.message;
       });
@@ -30,7 +30,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
         $scope.authentication.user = response;
 
         // And redirect to the previous or home page
-        $state.go($state.previous.state.name || 'home', $state.previous.params);
+        $state.go('home', {loggedin:true});
       }).error(function (response) {
         $scope.error = response.message;
       });
@@ -43,7 +43,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
       if ($state.previous) {
         redirect_to = $state.previous.href;
       }
-
+      $localStorage.loggedin = true;
       // Effectively call OAuth authentication route:
       $window.location.href = url + (redirect_to ? '?redirect_to=' + encodeURIComponent(redirect_to) : '');
     };

@@ -10,10 +10,18 @@ var mongoose = require('mongoose'),
  * Bar Schema
  */
 var BarSchema = new Schema({
-  name: String,
-  yelpid: String,
-  yelprating: Number,
-  visitors: [ { type: String } ]
+  name: {
+    type: String
+  },
+  yelpid: {
+    type: String
+  },
+  yelprating: {
+    type: Number
+  },
+  visitors: [{
+    type: String
+  }]
 });
 
 module.exports = mongoose.model('Bar', BarSchema);

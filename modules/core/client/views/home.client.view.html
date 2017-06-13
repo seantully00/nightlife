@@ -25,15 +25,16 @@
       <table class="center" border="1">
         <th> Bar </th>
         <th> Yelp Rating </th>
-        <th> Who's Going? </th>
         <th> I'm Going! </th>
+        <th> Who's Going? </th>
         </th>
           <tr ng-repeat="result in results">
               <td>{{ result.name }} <img class="resize" ng-src = "{{ result.image_url }}" /></td>
               <td>{{ result.rating }}</td>
-              <td>{{ result.id }}</td>
-              <td><input ng-click="checkin(result.id)" type="button" ng-model="result.id"></td>
-          </tr>
+              <td><input ng-click="checkin(result.id)" ng-if="authentication.user.checkedin != result.id" value="Check In" type="button" ng-model="result.id">
+                <input ng-click="checkout(result.id)" ng-if="authentication.user.checkedin == result.id" value="Check Out" type="button" ng-model="result.id"></td>
+              <td><div ng-repeat="user in result.users"><img class="resize" ng-src = "{{ user.providerData.profile_image_url }}" /></div><!--<img class="resize" ng-src = "{{ user.providerData.profile_image_url }}" />--></td>
+          </tr></tr>
       </table>
     </div>
     </div>

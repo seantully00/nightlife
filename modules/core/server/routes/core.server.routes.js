@@ -8,6 +8,8 @@ var Bar = require('../../../users/server/models/bar.server.model');
 
 var results = [];
 
+var visitors = [];
+
 const yelp = require('yelp-fusion');
 
 var zip;
@@ -35,51 +37,25 @@ module.exports = function (app) {
         client.search({term:'bar', location: req.body.zip}).then(response => {
         results = response.jsonBody.businesses;
         const prettyJson = JSON.stringify(results, null, 4);
-        //console.log(prettyJson);
-        res.json(results);
-        //console.log(results[0].id);
-        for (var i=0; i<results.length; i++) {
-          console.log(results[i].id);
-          Bar.findOne({ 'yelpid': results[i].id }).then(response => {
-            if (response) {
+
+        results.forEach(function(bar, index){
+
+          User.find( {'checkedin': bar.id}).then(response => {
+            results[index].users = response;
+            if (index === results.length-1) {
+              res.json(results);
+              console.log(results);
+            }
+            if (response.length > 0) {
               console.log(response);
-            } else {
               //console.log(response);
-              var newBar = new Bar();
-              newBar.name = results[i].name;
-              console.log(newBar.name);
-              newBar.id = results[i].id;
-              newBar.yelprating = results[i].rating;
-              newBar.visitors  = [];
-              console.log(newBar);
-              newBar.save(function (err) {
-                if (err) {
-                  throw err;
-                }
-          });
-          }
-        });
-        /*Bar.findOne({ 'id': results[i].id }, function (err, bar) {
-          //console.log(bar);
-          if (err) {
-            return err;
-          }
-          if (bar) {
-            return bar;
-          } else {
-            var newBar = new Bar();
-            newBar.name = results[i].name;
-            newBar.id = results[i].id;
-            newBar.yelprating = results[i].rating;
-            newBar.visitors  = [];
-            newBar.save(function (err) {
-              if (err) {
-                throw err;
+            } else {
+                console.log('nope');
               }
+            });
+
         });
-        }
-      });*/
-        }
+
 }).catch(e => {
   console.log(e);
 });
@@ -93,9 +69,20 @@ app.route('/checkin')
       //console.log(user);
       user.checkedin = req.body.id;
       user.save();
-      //console.log(user);
+      res.json(user);
 });
   });
+
+app.route('/checkout')
+    .post(function (req, res) {
+      //console.log(req.body.id);
+      User.findById(req.user._id, function(err, user){
+        //console.log(user);
+        user.checkedin = '';
+        user.save();
+        res.json(user);
+  });
+    });
 
 
 
