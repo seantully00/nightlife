@@ -29,7 +29,7 @@ module.exports = {
   twitter: {
     clientID: process.env.TWITTER_KEY || 'CONSUMER_KEY',
     clientSecret: process.env.TWITTER_SECRET || 'CONSUMER_SECRET',
-    callbackURL: '/api/auth/twitter/callback'
+    callbackURL: 'https://nightlifest.herokuapp.com/api/auth/twitter/callback'
   },
   google: {
     clientID: process.env.GOOGLE_ID || 'APP_ID',
