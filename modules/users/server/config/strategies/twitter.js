@@ -12,7 +12,7 @@ module.exports = function (config) {
   passport.use(new TwitterStrategy({
       consumerKey: process.env.TWITTER_KEY,
       consumerSecret: process.env.TWITTER_SECRET,
-      callbackURL: 'http://127.0.0.1:3000/api/auth/twitter/callback',
+      callbackURL: 'https://nightlifest.herokuapp.com/api/auth/twitter/callback',
       passReqToCallback: true
     },
     function (req, token, tokenSecret, profile, done) {
